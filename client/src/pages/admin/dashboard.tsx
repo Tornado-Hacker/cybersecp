@@ -9,6 +9,7 @@ import ProjectsEditor from "@/components/admin/projects-editor";
 import SkillsEditor from "@/components/admin/skills-editor";
 import CertificationsEditor from "@/components/admin/certifications-editor";
 import Settings from "@/components/admin/settings";
+import ContactMessages from "@/components/admin/contact-messages";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";

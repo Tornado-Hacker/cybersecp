@@ -95,7 +95,8 @@ export default function Contact() {
             <h4 className="text-2xl font-semibold text-gray-900 mb-6">Let's Connect</h4>
             <p className="text-gray-600 mb-8">
               Interested in connecting with a passionate cybersecurity enthusiast? Let's discuss learning 
-              opportunities, entry-level positions, or collaborate on security projects.
+              opportunities, entry-level positions, or collaborate on security projects. Please provide your email 
+              so I can respond to your message.
             </p>
             
             <div className="space-y-6">

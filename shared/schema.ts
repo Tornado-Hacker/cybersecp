@@ -69,6 +69,9 @@ export const contactMessages = pgTable("contact_messages", {
   subject: text("subject").notNull(),
   message: text("message").notNull(),
   createdAt: timestamp("created_at").defaultNow(),
+  replied: boolean("replied").default(false),
+  replyMessage: text("reply_message"),
+  repliedAt: timestamp("replied_at"),
 });
 
 // Insert schemas

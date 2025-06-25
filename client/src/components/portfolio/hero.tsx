@@ -44,10 +44,16 @@ export default function Hero() {
           </p>
           <div className="flex justify-center space-x-4">
             <Button 
-              onClick={() => scrollToSection('contact')}
+              onClick={() => {
+                if (profile?.resumeUrl) {
+                  window.open(profile.resumeUrl, '_blank');
+                } else {
+                  alert('Resume not available yet. Please check back later.');
+                }
+              }}
               className="btn-primary px-8 py-3 text-lg"
             >
-              Get In Touch
+              Download Resume
             </Button>
             <Button 
               variant="outline" 
