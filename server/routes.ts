@@ -319,7 +319,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Contact messages routes
-  app.post("/api/contact", async (req, res) => {
+  app.post("/api/contact-messages", async (req, res) => {
     try {
       const messageData = insertContactMessageSchema.parse(req.body);
       const message = await storage.createContactMessage(messageData);
@@ -329,12 +329,69 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/contact", requireAuth, async (req, res) => {
+  app.get("/api/contact-messages", requireAuth, async (req, res) => {
     try {
       const messages = await storage.getContactMessages();
       res.json(messages);
     } catch (error) {
       res.status(500).json({ message: "Failed to get contact messages" });
+    }
+  });
+
+  // Reply to contact message
+  app.post("/api/contact-messages/:id/reply", requireAuth, async (req, res) => {
+    try {
+      const messageId = parseInt(req.params.id);
+      const { replyMessage } = req.body;
+
+      const originalMessages = await storage.getContactMessages();
+      const message = originalMessages.find(m => m.id === messageId);
+      
+      if (!message) {
+        return res.status(404).send("Message not found");
+      }
+
+      // Update message with reply
+      const updatedMessage = await storage.replyToMessage(messageId, replyMessage);
+
+      // Send email reply (if SendGrid is configured)
+      try {
+        const { sendEmail } = await import("./email.js");
+        const profile = await storage.getProfile();
+        const fromEmail = profile?.email || "noreply@example.com";
+
+        const emailSent = await sendEmail({
+          to: message.email,
+          from: fromEmail,
+          subject: `Re: Your message from ${profile?.name || "Portfolio"}`,
+          text: replyMessage,
+          html: `
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+              <h2>Thank you for your message!</h2>
+              <p>Hi ${message.name},</p>
+              <p>Thank you for reaching out. Here's my response:</p>
+              <div style="background-color: #f5f5f5; padding: 15px; border-radius: 5px; margin: 20px 0;">
+                ${replyMessage.replace(/\n/g, '<br>')}
+              </div>
+              <p>Best regards,<br>${profile?.name || "Portfolio Owner"}</p>
+              <hr>
+              <p style="font-size: 12px; color: #666;">
+                Original message: ${message.message}
+              </p>
+            </div>
+          `,
+        });
+
+        if (!emailSent) {
+          console.warn('Email could not be sent, but reply was saved');
+        }
+      } catch (emailError) {
+        console.warn('Email service not configured, reply saved locally only');
+      }
+
+      res.json(updatedMessage);
+    } catch (error: any) {
+      res.status(500).send(error.message);
     }
   });
 

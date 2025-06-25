@@ -189,6 +189,8 @@ export default function AdminDashboard() {
         return <ProjectsEditor />;
       case "blog":
         return <BlogEditor />;
+      case "messages":
+        return <ContactMessages />;
       case "settings":
         return <Settings />;
       default:

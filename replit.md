@@ -110,11 +110,14 @@ This is a full-stack web application for a cybersecurity professional's portfoli
 - **Build Commands**: Separate build steps for client and server
 - **Asset Serving**: Static file serving with proper caching headers
 
-## Changelog
+## Recent Changes
 
 ```
-Changelog:
-- June 25, 2025. Initial setup
+- June 25, 2025: Initial portfolio setup with React frontend and Express backend
+- June 25, 2025: Added cybersecurity-focused content for beginner-level professional
+- June 25, 2025: Implemented contact messages system with email reply functionality
+- June 25, 2025: Added resume download capability and admin management
+- June 25, 2025: Enhanced admin settings with username/password change features
 ```
 
 ## User Preferences

@@ -20,6 +20,7 @@ export const profile = pgTable("profile", {
   location: text("location"),
   experienceYears: integer("experience_years").default(0),
   projectsCompleted: integer("projects_completed").default(0),
+  resumeUrl: text("resume_url"),
 });
 
 export const skills = pgTable("skills", {
@@ -63,10 +64,8 @@ export const blogPosts = pgTable("blog_posts", {
 
 export const contactMessages = pgTable("contact_messages", {
   id: serial("id").primaryKey(),
-  firstName: text("first_name").notNull(),
-  lastName: text("last_name").notNull(),
+  name: text("name").notNull(),
   email: text("email").notNull(),
-  subject: text("subject").notNull(),
   message: text("message").notNull(),
   createdAt: timestamp("created_at").defaultNow(),
   replied: boolean("replied").default(false),
