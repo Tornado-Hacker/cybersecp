@@ -7,7 +7,8 @@ import {
   Award, 
   Folder, 
   FileText, 
-  Cog 
+  Cog,
+  Mail
 } from "lucide-react";
 
 interface AdminSidebarProps {
@@ -22,6 +23,7 @@ const sidebarItems = [
   { id: "certifications", label: "Certifications", icon: Award },
   { id: "projects", label: "Projects", icon: Folder },
   { id: "blog", label: "Blog Posts", icon: FileText },
+  { id: "messages", label: "Messages", icon: Mail },
   { id: "settings", label: "Settings", icon: Cog },
 ];
 

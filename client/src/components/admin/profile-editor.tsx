@@ -265,6 +265,19 @@ export default function ProfileEditor() {
                     </FormItem>
                   )}
                 />
+                <FormField
+                  control={form.control}
+                  name="resumeUrl"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Resume URL</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Upload resume or paste URL" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
               </div>
 
               <div className="flex justify-end">
