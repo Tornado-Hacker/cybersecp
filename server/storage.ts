@@ -11,6 +11,7 @@ export interface IStorage {
   getUserByUsername(username: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
   updateUserPassword(id: number, password: string): Promise<void>;
+  updateUsername(id: number, username: string): Promise<void>;
   
   // Profile management
   getProfile(): Promise<Profile | undefined>;
@@ -45,6 +46,7 @@ export interface IStorage {
   // Contact messages
   getContactMessages(): Promise<ContactMessage[]>;
   createContactMessage(message: InsertContactMessage): Promise<ContactMessage>;
+  replyToMessage(id: number, replyMessage: string): Promise<ContactMessage>;
 }
 
 export class MemStorage implements IStorage {
@@ -91,6 +93,7 @@ export class MemStorage implements IStorage {
       location: "Remote",
       experienceYears: 0,
       projectsCompleted: 5,
+      resumeUrl: null,
     };
     this.profiles.set(defaultProfile.id, defaultProfile);
 
@@ -257,6 +260,14 @@ export class MemStorage implements IStorage {
     }
   }
 
+  async updateUsername(id: number, username: string): Promise<void> {
+    const user = this.users.get(id);
+    if (user) {
+      user.username = username;
+      this.users.set(id, user);
+    }
+  }
+
   // Profile methods
   async getProfile(): Promise<Profile | undefined> {
     return Array.from(this.profiles.values())[0];
@@ -266,7 +277,7 @@ export class MemStorage implements IStorage {
     const existingProfile = Array.from(this.profiles.values())[0];
     const profile: Profile = existingProfile ? 
       { ...existingProfile, ...profileData } : 
-      { ...profileData, id: this.currentProfileId++, aboutExtended: profileData.aboutExtended || null, phone: profileData.phone || null, location: profileData.location || null, experienceYears: profileData.experienceYears || null, projectsCompleted: profileData.projectsCompleted || null };
+      { ...profileData, id: this.currentProfileId++, aboutExtended: profileData.aboutExtended || null, phone: profileData.phone || null, location: profileData.location || null, experienceYears: profileData.experienceYears || null, projectsCompleted: profileData.projectsCompleted || null, resumeUrl: profileData.resumeUrl || null };
     this.profiles.set(profile.id, profile);
     return profile;
   }
@@ -403,9 +414,24 @@ export class MemStorage implements IStorage {
 
   async createContactMessage(message: InsertContactMessage): Promise<ContactMessage> {
     const id = this.currentContactId++;
-    const newMessage: ContactMessage = { ...message, id, createdAt: new Date() };
+    const newMessage: ContactMessage = { ...message, id, createdAt: new Date(), replied: false, replyMessage: null, repliedAt: null };
     this.contactMessages.set(id, newMessage);
     return newMessage;
+  }
+
+  async replyToMessage(id: number, replyMessage: string): Promise<ContactMessage> {
+    const message = this.contactMessages.get(id);
+    if (!message) {
+      throw new Error('Message not found');
+    }
+    const updatedMessage: ContactMessage = {
+      ...message,
+      replied: true,
+      replyMessage,
+      repliedAt: new Date()
+    };
+    this.contactMessages.set(id, updatedMessage);
+    return updatedMessage;
   }
 }
 

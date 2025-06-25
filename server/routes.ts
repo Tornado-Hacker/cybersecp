@@ -85,6 +85,30 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Change username
+  app.post("/api/auth/change-username", requireAuth, async (req, res) => {
+    try {
+      const { newUsername } = req.body;
+      const userId = req.session.userId!;
+
+      const user = await storage.getUser(userId);
+      if (!user) {
+        return res.status(404).send("User not found");
+      }
+
+      // Check if username already exists
+      const existingUser = await storage.getUserByUsername(newUsername);
+      if (existingUser && existingUser.id !== userId) {
+        return res.status(400).send("Username already exists");
+      }
+
+      await storage.updateUsername(userId, newUsername);
+      res.json({ message: "Username updated successfully" });
+    } catch (error: any) {
+      res.status(500).send(error.message);
+    }
+  });
+
   // Profile routes
   app.get("/api/profile", async (req, res) => {
     try {
