@@ -1,9 +1,15 @@
-olvers/zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import { insertProfileSchema } from "@shared/schema";
@@ -80,7 +86,9 @@ export default function ProfileEditor() {
     return (
       <div className="space-y-8">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Profile Management</h2>
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">
+            Profile Management
+          </h2>
           <p className="text-gray-600">Loading profile...</p>
         </div>
       </div>
@@ -90,8 +98,12 @@ export default function ProfileEditor() {
   return (
     <div className="space-y-8">
       <div>
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">Profile Management</h2>
-        <p className="text-gray-600">Update your personal information and professional details</p>
+        <h2 className="text-2xl font-bold text-gray-900 mb-2">
+          Profile Management
+        </h2>
+        <p className="text-gray-600">
+          Update your personal information and professional details
+        </p>
       </div>
 
       <Card>
@@ -122,7 +134,10 @@ export default function ProfileEditor() {
                     <FormItem>
                       <FormLabel>Professional Title</FormLabel>
                       <FormControl>
-                        <Input placeholder="e.g., Aspiring Cybersecurity Professional" {...field} />
+                        <Input
+                          placeholder="e.g., Aspiring Cybersecurity Professional"
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -137,10 +152,10 @@ export default function ProfileEditor() {
                   <FormItem>
                     <FormLabel>Professional Headline</FormLabel>
                     <FormControl>
-                      <Textarea 
-                        rows={3} 
-                        placeholder="Brief description of your expertise..." 
-                        {...field} 
+                      <Textarea
+                        rows={3}
+                        placeholder="Brief description of your expertise..."
+                        {...field}
                       />
                     </FormControl>
                     <FormMessage />
@@ -155,10 +170,10 @@ export default function ProfileEditor() {
                   <FormItem>
                     <FormLabel>About Me</FormLabel>
                     <FormControl>
-                      <Textarea 
-                        rows={6} 
-                        placeholder="Detailed description of your background and experience..." 
-                        {...field} 
+                      <Textarea
+                        rows={6}
+                        placeholder="Detailed description of your background and experience..."
+                        {...field}
                       />
                     </FormControl>
                     <FormMessage />
@@ -173,10 +188,10 @@ export default function ProfileEditor() {
                   <FormItem>
                     <FormLabel>Extended About (Optional)</FormLabel>
                     <FormControl>
-                      <Textarea 
-                        rows={4} 
-                        placeholder="Additional information about your passion and goals..." 
-                        {...field} 
+                      <Textarea
+                        rows={4}
+                        placeholder="Additional information about your passion and goals..."
+                        {...field}
                       />
                     </FormControl>
                     <FormMessage />
@@ -192,7 +207,11 @@ export default function ProfileEditor() {
                     <FormItem>
                       <FormLabel>Email</FormLabel>
                       <FormControl>
-                        <Input type="email" placeholder="your.email@example.com" {...field} />
+                        <Input
+                          type="email"
+                          placeholder="your.email@example.com"
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -205,7 +224,11 @@ export default function ProfileEditor() {
                     <FormItem>
                       <FormLabel>Phone</FormLabel>
                       <FormControl>
-                        <Input type="tel" placeholder="+1 (555) 123-4567" {...field} />
+                        <Input
+                          type="tel"
+                          placeholder="+1 (555) 123-4567"
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -234,11 +257,13 @@ export default function ProfileEditor() {
                     <FormItem>
                       <FormLabel>Years of Experience</FormLabel>
                       <FormControl>
-                        <Input 
-                          type="number" 
-                          placeholder="8" 
+                        <Input
+                          type="number"
+                          placeholder="8"
                           {...field}
-                          onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
+                          onChange={(e) =>
+                            field.onChange(parseInt(e.target.value) || 0)
+                          }
                         />
                       </FormControl>
                       <FormMessage />
@@ -252,11 +277,13 @@ export default function ProfileEditor() {
                     <FormItem>
                       <FormLabel>Projects Completed</FormLabel>
                       <FormControl>
-                        <Input 
-                          type="number" 
-                          placeholder="50" 
+                        <Input
+                          type="number"
+                          placeholder="50"
                           {...field}
-                          onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
+                          onChange={(e) =>
+                            field.onChange(parseInt(e.target.value) || 0)
+                          }
                         />
                       </FormControl>
                       <FormMessage />
@@ -270,7 +297,10 @@ export default function ProfileEditor() {
                     <FormItem>
                       <FormLabel>Resume URL</FormLabel>
                       <FormControl>
-                        <Input placeholder="Upload resume or paste URL" {...field} />
+                        <Input
+                          placeholder="Upload resume or paste URL"
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -279,8 +309,8 @@ export default function ProfileEditor() {
               </div>
 
               <div className="flex justify-end">
-                <Button 
-                  type="submit" 
+                <Button
+                  type="submit"
                   className="btn-primary"
                   disabled={updateMutation.isPending}
                 >
